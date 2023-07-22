@@ -10,12 +10,12 @@ clock = pygame.time.Clock()
 
   # 파일 Path 설정
 currunt_path = os.path.dirname(__file__) 
-image_path = os.path.join(currunt_path, "image")
+image_folder_path = os.path.join(currunt_path, "image")
 
-  #이미지 불러오기
-background = pygame.image.load(os.path.join(image_path, "background.png"))  
-ground = pygame.image.load(os.path.join(image_path, "ground.png"))  
-player = pygame.image.load(os.path.join(image_path, "player.png"))
+  # 이미지 설정
+background = pygame.image.load(os.path.join(image_folder_path, "background.png"))
+ground = pygame.image.load(os.path.join(image_folder_path, "ground.png"))
+player = pygame.image.load(os.path.join(image_folder_path, "player.png"))
 
   # player 설정
 player_size = player.get_rect().size
@@ -29,7 +29,6 @@ player_to_y = 0
 jumping = False  # 점프 설정
 jump_hight = 15
 y_velocity = jump_hight
-
 
 
 running = True
@@ -69,6 +68,7 @@ while running:
 
 
   pygame.display.update()
+
 
 
 
