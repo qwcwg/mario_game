@@ -1,0 +1,99 @@
+마리오 게임
+
+물체
+    - 플레이어
+    - 적
+    - 블록(땅)
+    - 무기
+    - 도착 지점
+    - 점수
+
+행동 
+    - 이동
+    - 점프
+    - 중력
+    - 공격
+    - 충돌
+
+
+
+이동(플레이어):
+    def right_move(플레이어):
+        플레이어.to_x 증가
+        플레이어.front_side = "right"
+    def left_move(플레이어):
+        플레이어.to_x 감소
+        플레이어.front_side = "left"
+
+
+중력(플레이어):
+    항상(for loop에 위치)
+        GRAVITY = 1
+        플레이어.to_y += min(1, (플레이어.fall_count / FPS) * GRAVITY)
+        fall_count += 1
+
+
+점프(플레이어):     # 이게 맞는지 모르겠음. 충돌 처리를 성공시켜야 정확히 확인 가능.
+    플레이어.jump_height = 360
+    플레이어.to_y +=  플레이어.jump_height / FPS
+    플레이어.jump_height -= 1   # 프레임마다 줄어듦. 마치 점프 했을 때의 가속도가 점점 감소하듯.
+
+
+handle_move(플레이어):
+    if K_RIGHT 눌림
+        right_move()
+    if K_LEFT 눌림:
+        left_move()   
+    if K_SPACE 눌림:
+        점프()  
+
+    플레이어.x_pos += 플레이어.to_x
+    플레이어.y_pos += 플레이어.to_y
+
+
+공격(플레이어):
+    if K_R 눌림
+        if 플레이어.front_side == "right"
+            플레이어.right 에서 무기 생성
+            0.3초 대기
+            무기 사라지기
+        if 플레이어.front_side == "left"
+            플레이어.left 에서 무기 생성
+            0.5초 대기
+            무기 소멸       
+
+
+충돌(플레이어, 블록): 
+    if 충돌(플레이어.bottom_side, 블록.top_side):
+        플레이어.bottom_side = 블록.top_side
+    if 충돌(플레이어.top_side, 블록.bottom_side):
+        점프 역방향으로
+    if 충돌(플레이어.right_side, 블록.left_side):
+        플레이어.right_side = 블록.left_side
+    if 충돌(플레이어.left_side, 블록.right_side)
+        플레이어.left_side = 블록.right_side
+
+
+충돌(무기, 적):
+    if 충돌(무기, 적):
+        적 사라지기
+        점수_증가()
+        
+
+충돌(플레이어, 적):
+    if 충돌(플레이어, 적):
+        점수_감소()
+
+
+점수:
+    점수 = 60
+
+    if 1초가 지날 때마다:
+        점수 -= 1
+    
+    점수_증가():
+        점수 += 5
+    
+    점수_감소():
+        점수 -= 5
+
