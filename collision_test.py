@@ -109,14 +109,15 @@ class Player(Sprite):   # Player 클래스. 점프 기능 추가
     self.y_pos += self.to_y
   
 
-def handle_collision(player, block):
-  if pygame.sprite.collide_mask(player, block):
-    player.rect.bottom = block.rect.top
-
-# def handle_collision(player, block):    # 나도코딩 방식
-#   if player.rect_test.colliderect(block.rect_test):
+# def handle_collision(player, block):
+#   if pygame.sprite.collide_mask(player, block):
 #     print("충돌")
 #     player.rect.bottom = block.rect.top
+
+def handle_collision(player, block):    # 나도코딩 방식
+  if player.rect_test.colliderect(block.rect_test):
+    print("충돌")
+    player.rect.bottom = block.rect.top
 
 
 
@@ -133,13 +134,13 @@ while running:
 
     if event.type == pygame.QUIT:
       running = False
-      print(player.rect.bottom)
+
 
 
   player.handle_move()
   handle_collision(player, ground)
 
-
+  # print(player.rect.bottom)
 
 
   background.draw()  # 화면에 그리기
