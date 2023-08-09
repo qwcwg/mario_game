@@ -22,6 +22,9 @@ ground_path = os.path.join(image_folder_path, "ground.png")
 player_path = os.path.join(image_folder_path, "player.png")
 weapon_path = os.path.join(image_folder_path, "weapon.png")
 monster_path = os.path.join(image_folder_path, "monster.png")
+block_1_path = os.path.join(image_folder_path, "block_1.png")
+block_2_path = os.path.join(image_folder_path, "block_2.png")
+block_3_path = os.path.join(image_folder_path, "block_3.png")
 
 
 class Sprite(pygame.sprite.Sprite):  # Sprite 클래스
@@ -128,7 +131,7 @@ def handle_move(player, weapon, objects):
 
 
 def pos_update(weapon, player):  #  위치 초기화 함수
-  weapon.x_pos = player.x_pos + 50
+  weapon.x_pos = player.x_pos 
   weapon.y_pos = player.y_pos
 
   player.point_1 = [player.x_pos, player.y_pos]
@@ -144,21 +147,23 @@ def array_draw(array):
 
 def top_side_collision(player, objects):
   for obj in objects:
-    if player.point_3[1] == obj.point_1[1]:
+    if player.point_3[1] > obj.point_1[1]:
       if obj.point_1[0] < player.point_3[0] < obj.point_2[0]  or  obj.point_1[0] < player.point_4[0] < obj.point_2[0]:
+        # player.y_pos = obj.point_1[1] - player.height
         player.y_pos = obj.point_1[1]
 
 
 
 player = Player(player_path, 100, 700)    # 클래스 생성
 background = Sprite(background_path, 0, 0)
-ground = Sprite(ground_path, 0, 800)
+ground = Sprite(ground_path, 0, 770)
 weapon = Weapon(weapon_path, player.x_pos + 50, player.y_pos)
 monster_array = [
     Monster(monster_path, 1400, 700),
     Monster(monster_path, 1000, 500),
     Monster(monster_path, 900, 300)
 ]
+block_array = [Sprite(block_1_path, 0, )]
 objects = [ground]
 
 
@@ -178,6 +183,7 @@ while running:
   background.draw()  # 화면에 그리기
   ground.draw()
   player.draw()
+    # screen.blit(player.image, (player.point_1[0], player.point_1[1]))
   array_draw(monster_array)
 
   weapon.weapon_active()  # 무기 활성화
