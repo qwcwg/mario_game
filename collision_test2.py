@@ -119,7 +119,7 @@ def handle_move(player, weapon, objects):
     player.move_right()
   if keys[pygame.K_LEFT]:
     player.move_left()
-  if keys[pygame.K_SPACE] and player.jumping == False:
+  if keys[pygame.K_SPACE]:
     player.move_jump()
   if keys[pygame.K_r]:
     weapon.active = True
@@ -137,14 +137,10 @@ def handle_move(player, weapon, objects):
       player.y_velocity -= 1
       player.jumping = False
 
-  if player.jumping == False:
-    player.gravity()  # 중력 함수 사용
+  player.gravity()  # 중력 함수 사용
 
   player.x_pos += player.to_x
-  if player.y_pos < 750:
-    player.y_pos += player.to_y
-
-
+  player.y_pos += player.to_y
 
 
 def pos_update(weapon, player):  #  위치 초기화 함수
